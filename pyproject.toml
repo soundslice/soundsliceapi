@@ -1,0 +1,12 @@
+[build-system]
+requires = ["flit_core >=2,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.metadata]
+module = "soundsliceapi"
+author = "Soundslice"
+author-email = "feedback@soundslice.com"
+home-page = "https://github.com/soundslice/soundsliceapi/"
+classifiers = [ "License :: OSI Approved :: MIT License",]
+description-file = "README.md"
+requires = ["requests >=2.25"]
