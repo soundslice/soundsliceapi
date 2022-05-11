@@ -126,8 +126,8 @@ This API method is only available by special permission. If you’d like access,
 client.upload_slice_notation(
     scorehash="n4nrf", 
 
-    # Raw notation file path.
-    fp="~/tmp/notation/score.xml",
+    # File-like object containing the raw notation data.
+    fp=open("~/tmp/notation/score.xml", "r"),
 
     # An optional URL that Soundslice will POST to when the upload is processed. 
     # Should be a full path, starting with http:// or https://.
