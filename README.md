@@ -116,6 +116,18 @@ On success returns in a dictionary with the following key:
 | ----------------- | ------------------------------------------------------------------------  | ------------------- |
 | `"url"`             | `"https://soundslice-data.s3.amazonaws.com/json/592129/rawscore?response…"` | This is a URL where you can download the original notation file within the next 15 minutes.<br /><br />Note `"url"` will be set to the empty string for slices that don’t have an original notation file. |
 
+### get_slice_musicxml(scorehash)
+
+Generates MusicXML for a slice.
+
+Note this uses our own MusicXML exporting algorithm based on the slice’s current notation. If you created your slice by uploading a MusicXML file, this will not return that file; you can alternatively <a href="#get_original_slice_notation_filescorehash">get the slice’s original notation</a>
+
+```python
+client.get_slice_musicxml('scorehash')
+```
+
+On success returns a string containing the MusicXML for the slice.
+
 ### upload_slice_notation(**kwargs)
 
 Uploads a notation file into a given slice.

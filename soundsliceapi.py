@@ -47,7 +47,7 @@ class Client:
         self.app_id = app_id
         self.password = password
 
-    def make_request(self, method, endpoint, data=None):
+    def make_request_raw(self, method, endpoint, data=None):
         url = f'{self.API_PREFIX}{endpoint}'
         auth = (self.app_id, self.password)
         if method == METHOD_POST:
@@ -63,6 +63,10 @@ class Client:
             raise ValidationError(response.content)
         elif status_code == 429:
             raise RateLimited
+        return response
+
+    def make_request(self, method, endpoint, data=None):
+        response = self.make_request_raw(method, endpoint, data=data)
         return response.json()
 
     def create_slice(self, name=None, artist=None, has_shareable_url=False, embed_status=None, can_print=False, folder_id=None):
@@ -100,6 +104,12 @@ class Client:
             data = {'callback_url': callback_url}
         response = self.make_request(METHOD_POST, f'/slices/{scorehash}/notation-file/', data=data)
         requests.put(response['url'], data=fp)
+
+    def get_slice_musicxml(self, scorehash):
+        response = self.make_request_raw(METHOD_GET, f'/slices/{scorehash}/musicxml/')
+        if response.status_code == 404:
+            return None
+        return response.text
 
     def move_slice_to_folder(self, scorehash, folder_id=None):
         # folder_id 0 is the user's top-level folder. We accept None in this library as syntactic sugar.
