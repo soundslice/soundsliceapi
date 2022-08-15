@@ -83,7 +83,7 @@ class Client:
 
     def delete_slice(self, scorehash):
         return self.make_request(METHOD_DELETE, f'/slices/{scorehash}/')
-    
+
     def list_slices(self):
         return self.make_request(METHOD_GET, '/slices/')
 
@@ -136,10 +136,10 @@ class Client:
 
     def reorder_slice_recordings(self, scorehash, order):
         return self.make_request(
-                METHOD_POST, 
-                f'/slices/{scorehash}/recordings/order/', 
-                data={'order': order}
-            )
+            METHOD_POST,
+            f'/slices/{scorehash}/recordings/order/',
+            data={'order': order}
+        )
 
     def change_recording(self, recording_id, name=None, source_data=None, hls_url=None):
         data = {}

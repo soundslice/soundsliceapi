@@ -37,14 +37,14 @@ client.create_slice(
     # Slice URL is private by default.
     has_shareable_url=True,
 
-    # Embedding is disabled by default. To enable pass 
+    # Embedding is disabled by default. To enable pass
     # EMBED_STATUS_ON_ALLOWLIST.
     embed_status=Constants.EMBED_STATUS_ON_ALLOWLIST,
 
     # Printing is disabled by default.
     can_print=True,
 
-    # A string specifying the ID of the folder in which to put the slice. 
+    # A string specifying the ID of the folder in which to put the slice.
     # If you don't specify this, it will be placed in the account's root folder.
     folder_id='31045'
 )
@@ -124,12 +124,12 @@ This API method is only available by special permission. If you’d like access,
 
 ```python
 client.upload_slice_notation(
-    scorehash="n4nrf", 
+    scorehash="n4nrf",
 
     # File-like object containing the raw notation data.
     fp=open("~/tmp/notation/score.xml", "r"),
 
-    # An optional URL that Soundslice will POST to when the upload is processed. 
+    # An optional URL that Soundslice will POST to when the upload is processed.
     # Should be a full path, starting with http:// or https://.
     callback_url=None
 )
@@ -152,7 +152,7 @@ client.move_slice_to_folder(
     # Required scorehash
     scorehash="n4nrf",
 
-    # Required ID of the new folder. 
+    # Required ID of the new folder.
     # Use folder_id 0 (zero) to move the slice to your account’s root folder.
     folder_id=0,
 )
@@ -204,14 +204,14 @@ client.create_recording(
         # Constants.SOURCE_VIMEO
         # Constants.SOURCE_WISTIA
     source=Constants.SOURCE_YOUTUBE,
-    
+
     # Required for some sources. See table below.
     source_data="dQw4w9WgXcQ",
 
     # Applicable only if source is Constants.SOURCE_VIDEO_URL.
-    # The value is not required if you provide source_data. 
+    # The value is not required if you provide source_data.
     # You can provide both hls_url and source_data; in that case,
-    # our player will use the hls_url for users whose 
+    # our player will use the hls_url for users whose
     # browsers support HLS and source_data otherwise.
     hls_url=None,
 
@@ -255,8 +255,8 @@ client.reorder_slice_recordings(
     scorehash="78sDc",
 
     # A string of recording IDs separated by commas, in your requested order.
-    # The first recording ID is the top-most recording in the Soundslice UI, 
-    # and so forth. The last recording ID is the default. Every recording in 
+    # The first recording ID is the top-most recording in the Soundslice UI,
+    # and so forth. The last recording ID is the default. Every recording in
     # the slice must be included in this data.
     order="123,124,121"
 )
@@ -325,15 +325,15 @@ client.put_recording_syncpoints(
     # Required. See syncpoint data format link above.
     syncpoints=[[0, 0], [1, 0.57], [1, 0.8, 240], [2, 1.3]],
 
-    # Optional. Number of seconds into the recording to start cropping 
-    # (a float). For example, if this is 12, then the recording will begin 
+    # Optional. Number of seconds into the recording to start cropping
+    # (a float). For example, if this is 12, then the recording will begin
     #  playback at 12 seconds, and seconds 0-12 will be inaccessible.
     crop_start=12,
 
-    # Optional. Number of seconds into the recording to end cropping 
-    # (a float). For example, if this is 60, then the recording will end 
-    #  playback at the timecode 60 seconds, and any audio after timecode 60 
-    # seconds will be inaccessible. Note this is relative to the absolute 
+    # Optional. Number of seconds into the recording to end cropping
+    # (a float). For example, if this is 60, then the recording will end
+    #  playback at the timecode 60 seconds, and any audio after timecode 60
+    # seconds will be inaccessible. Note this is relative to the absolute
     # recording, so crop_start has no effect on crop_end.
     crop_end=60
 )
@@ -354,7 +354,7 @@ client.create_folder(
     # Required.
     name="Practice list",
 
-    # Optional. The folder’s parent ID. Use this if you want to nest a folder 
+    # Optional. The folder’s parent ID. Use this if you want to nest a folder
     # within another one.
     parent_id=31043
 )
