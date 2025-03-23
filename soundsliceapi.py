@@ -4,6 +4,7 @@ __version__ = '1.1'
 
 import json
 import requests
+import mimetypes
 
 class Constants:
     # Constants for the user to import and pass.
@@ -47,15 +48,20 @@ class Client:
         self.app_id = app_id
         self.password = password
 
-    def make_request_raw(self, method, endpoint, data=None):
+    def make_request_raw(self, method, endpoint, data=None, files=None):
         url = f'{self.API_PREFIX}{endpoint}'
         auth = (self.app_id, self.password)
+
         if method == METHOD_POST:
-            response = requests.post(url, auth=auth, data=data)
+            if files:  # Handle file uploads separately
+                response = requests.post(url, auth=auth, data=data, files=files)
+            else:
+                response = requests.post(url, auth=auth, data=data)
         elif method == METHOD_GET:
             response = requests.get(url, auth=auth)
         elif method == METHOD_DELETE:
             response = requests.delete(url, auth=auth)
+
         status_code = response.status_code
         if status_code == 403:
             raise PermissionDenied
@@ -63,10 +69,12 @@ class Client:
             raise ValidationError(response.content)
         elif status_code == 429:
             raise RateLimited
+
         return response
 
-    def make_request(self, method, endpoint, data=None):
-        response = self.make_request_raw(method, endpoint, data=data)
+
+    def make_request(self, method, endpoint, data=None, files=None):
+        response = self.make_request_raw(method, endpoint, data=data, files=files)
         return response.json()
 
     def create_slice(self, name=None, artist=None, has_shareable_url=False, embed_status=None, can_print=False, folder_id=None):
@@ -179,15 +187,30 @@ class Client:
             data={'order': order}
         )
 
-    def change_recording(self, recording_id, name=None, source_data=None, hls_url=None):
+    def change_recording(self, recording_id, name=None, thumbnail=None, source_data=None, hls_url=None):
         data = {}
+        files = {}
+
         if name:
             data['name'] = name
         if source_data:
             data['source_data'] = source_data
         if hls_url:
             data['hls_url'] = hls_url
-        return self.make_request(METHOD_POST, f'/recordings/{recording_id}/', data=data)
+        if thumbnail:
+            mime_type = mimetypes.guess_type(thumbnail)[0] or "application/octet-stream"
+            file = open(thumbnail, "rb")  # Open file without 'with' to keep it open
+            files["thumbnail"] = (thumbnail, file, mime_type)
+
+        try:
+            response = self.make_request(METHOD_POST, f'/recordings/{recording_id}/', data=data, files=files)
+        finally:
+            if thumbnail:
+                file.close()  # Manually close the file after the request
+
+        return response
+
+
 
     def delete_recording(self, recording_id):
         return self.make_request(METHOD_DELETE, f'/recordings/{recording_id}/')

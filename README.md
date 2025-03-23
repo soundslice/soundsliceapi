@@ -328,18 +328,22 @@ client.change_recording(
     source_data="IuUwyIPSgnQ",
 
     # Only available for video URLs.
-    hls_url=""
+    hls_url="",
+
+    # Optional thumbnail upload.
+    thumbnail="path/to/thumbnail.jpg"
 )
 ```
 
 On success, returns in a dictionary with the following keys:
 
-| Key             | Example                 | Notes                                                  |
-| --------------- | ----------------------- | ------------------------------------------------------ |
-| `"id"`          | `626940`                | The recording's ID.                                    |
-| `"name"`        | `"YouTube performance"` | The recording’s name.                                  |
-| `"source_data"` | `"IuUwyIPSgnQ"`         | The recording’s `source data` (see above for details). |
-| `"hls_url"`     | `""`                    | The recording’s HLS URL, or an empty string.           |
+| Key               | Example                 | Notes                                                  |
+| ----------------- | ----------------------- | ------------------------------------------------------ |
+| `"id"`            | `626940`                | The recording's ID.                                    |
+| `"name"`          | `"YouTube performance"` | The recording’s name.                                  |
+| `"source_data"`   | `"IuUwyIPSgnQ"`         | The recording’s `source data` (see above for details). |
+| `"hls_url"`       | `""`                    | The recording’s HLS URL, or an empty string.           |
+| `"thumbnail_url"` | `""`                    | The URL of the uploaded thumbnail.                     |
 
 ### delete_recording(recording_id)
 
