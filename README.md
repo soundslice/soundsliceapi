@@ -42,11 +42,7 @@ client.create_slice(
     embed_status=Constants.EMBED_STATUS_ON_ALLOWLIST,
 
     # Printing is disabled by default.
-    can_print=True,
-
-    # A string specifying the ID of the folder in which to put the slice.
-    # If you don't specify this, it will be placed in the account's root folder.
-    folder_id='31045'
+    can_print=True
 )
 ```
 Returns a dictionary of slice information with the following keys:
@@ -154,27 +150,6 @@ If a `callback_url` is provided, we’ll notify you when the upload has processe
 | `"scorehash"`      | `"d8sDc"`                             | String. The newly created slice’s scorehash. |
 | `"success"`         | `"1"`                                 | String. `"1"` if it was successfully processed. `"2"` if there was an error. |
 | `"error"`           | `"We couldn't parse the given file."` | String. An error message, in case of errors. |
-
-### move_slice_to_folder(**kwargs)
-
-Moves a slice to a given folder, in either your own account or an organization you belong to.
-
-```python
-client.move_slice_to_folder(
-    # Required scorehash
-    scorehash="n4nrf",
-
-    # Required ID of the new folder.
-    # Use folder_id 0 (zero) to move the slice to your account’s root folder.
-    folder_id=0,
-)
-```
-
-On success, returns in a dictionary with the following key:
-
-| Key     | Example | Notes   |
-| ------- | ------- | ------- |
-| `"id"`    | `0`       | Integer. The ID of the folder, or `0` (zero) for the root folder. |
 
 ### duplicate_slice(scorehash)
 
@@ -356,70 +331,3 @@ On success, returns in a dictionary with the following key:
 | Key     | Example | Notes   |
 | ------- | ------  | ------- |
 | `"id"`    | `626940`  | The recording ID, as an integer. |
-
-### create_folder(**kwargs)
-
-Creates a folder within your account’s slice manager.
-
-```python
-client.create_folder(
-    # Required.
-    name="Practice list",
-
-    # Optional. The folder’s parent ID. Use this if you want to nest a folder
-    # within another one.
-    parent_id=31043
-)
-```
-
-On success returns in a dictionary with the following key:
-
-| Key     | Example | Notes   |
-| ------- | ------  | ------- |
-| `"id"`    | `31044`  | The ID of the newly created folder. |
-
-### rename_folder(**kwargs)
-
-Renames the given folder within your account’s slice manager.
-
-```python
-# All required.
-folder_id=31044,
-
-name="New practice list"
-```
-
-On success, returns in a dictionary with the following key:
-
-| Key     | Example | Notes   |
-| ------- | ------  | ------- |
-| `"id"`    | `31044`  | The ID of the folder. |
-
-### delete_folder(folder_id)
-
-Deletes the given folder within your account’s slice manager.
-
-```python
-client.delete_folder(
-    folder_id=31044
-)
-```
-
-On success, returns in a dictionary with the following key:
-
-| Key         | Example | Notes   |
-| ----------- | ------  | ------- |
-| `"parent_id"` | `31043`   | The ID of the deleted folder’s parent folder, or `None` if the deleted folder was in the root. |
-
-### list_folders(**kwargs)
-
-Lists all folders within your account’s slice manager.
-
-By default, this lists only the top-level folders. To list subfolders within a given folder, pass the parameter `parent_id`.
-
-```python
-client.list_folders(
-    # Optional.
-    parent_id=None
-)
-```

@@ -69,7 +69,7 @@ class Client:
         response = self.make_request_raw(method, endpoint, data=data)
         return response.json()
 
-    def create_slice(self, name=None, artist=None, has_shareable_url=False, embed_status=None, can_print=False, folder_id=None):
+    def create_slice(self, name=None, artist=None, has_shareable_url=False, embed_status=None, can_print=False):
         data = {}
         if name is not None:
             data['name'] = name
@@ -81,8 +81,6 @@ class Client:
             data['embed_status'] = embed_status
         if can_print:
             data['print_status'] = PRINT_STATUS_ALLOWED
-        if folder_id is not None:
-            data['folder_id'] = folder_id
         return self.make_request(METHOD_POST, '/slices/', data=data)
 
     def delete_slice(self, scorehash):
@@ -110,12 +108,6 @@ class Client:
         if response.status_code == 404:
             return None
         return response.text
-
-    def move_slice_to_folder(self, scorehash, folder_id=None):
-        # folder_id 0 is the user's top-level folder. We accept None in this library as syntactic sugar.
-        if folder_id is None:
-            folder_id = 0
-        return self.make_request(METHOD_POST, f'/slices/{scorehash}/move/', data={'folder_id': folder_id})
 
     def duplicate_slice(self, scorehash):
         return self.make_request(METHOD_POST, f'/slices/{scorehash}/duplicate/')
@@ -174,23 +166,3 @@ class Client:
         if crop_end:
             data['crop_start'] = crop_end
         return self.make_request(METHOD_POST, f'/recordings/{recording_id}/syncpoints/', data=data)
-
-    def create_folder(self, name, parent_id=None):
-        data = {'name': name}
-        if parent_id:
-            data['parent_id'] = parent_id
-        return self.make_request(METHOD_POST, '/folders/', data=data)
-
-    def rename_folder(self, folder_id, name):
-        data = {'name': name}
-        return self.make_request(METHOD_POST, f'/folders/{folder_id}/', data=data)
-
-    def delete_folder(self, folder_id):
-        return self.make_request(METHOD_DELETE, f'/folders/{folder_id}/')
-
-    def list_folders(self, parent_id=None):
-        if parent_id:
-            url = f'/folders/?parent_id={parent_id}'
-        else:
-            url = '/folders/'
-        return self.make_request(METHOD_GET, url)
