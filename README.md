@@ -106,7 +106,7 @@ Retrieves the original notation file for a slice. This is a file in one of our s
 client.get_original_slice_notation_file('scorehash')
 ```
 
-On success returns in a dictionary with the following key:
+On success, returns a dictionary with the following key:
 
 | Key               | Example                                                                   | Notes               |
 | ----------------- | ------------------------------------------------------------------------  | ------------------- |
@@ -122,7 +122,7 @@ Note this uses our own MusicXML exporting algorithm based on the slice’s curre
 client.get_slice_musicxml('scorehash')
 ```
 
-On success returns a string containing the MusicXML for the slice.
+On success, returns a string containing the MusicXML for the slice.
 
 ### upload_slice_notation(**kwargs)
 
@@ -220,7 +220,7 @@ The `source_data` value is different depending on the recording source, as follo
 
 ### get_slice_recordings(scorehash)
 
-Gets data about all recordings in a given slice. On success, returns in a dictionary with the following keys:
+Gets data about all recordings in a given slice. On success, returns a dictionary with the following keys:
 
 | Key                | Example                             | Notes               |
 | ------------------ | ----------------------------------- | ------------------- |
@@ -269,7 +269,7 @@ client.change_recording(
 )
 ```
 
-On success, returns in a dictionary with the following keys:
+On success, returns a dictionary with the following keys:
 
 | Key                | Example                             | Notes               |
 | ------------------ | ----------------------------------- | ------------------- |
@@ -285,7 +285,7 @@ Deletes a recording, including all its associated data such as syncpoints and up
 ```python
 client.delete_recording("626940")
 ```
-On success, returns in a dictionary with the following key:
+On success, returns a dictionary with the following key:
 
 | Key       | Example | Notes   |
 | --------- | ------- | ------- |
@@ -326,7 +326,7 @@ client.put_recording_syncpoints(
 )
 ```
 
-On success, returns in a dictionary with the following key:
+On success, returns a dictionary with the following key:
 
 | Key     | Example | Notes   |
 | ------- | ------  | ------- |
