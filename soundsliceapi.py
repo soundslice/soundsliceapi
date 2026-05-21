@@ -166,3 +166,20 @@ class Client:
         if crop_end:
             data['crop_start'] = crop_end
         return self.make_request(METHOD_POST, f'/recordings/{recording_id}/syncpoints/', data=data)
+
+    def create_list(self, name, parent_id=None):
+        data = {'name': name}
+        if parent_id:
+            data['parent'] = parent_id
+        return self.make_request(METHOD_POST, '/lists/', data=data)
+
+    def rename_list(self, list_id, name):
+        data = {'name': name}
+        return self.make_request(METHOD_POST, f'/lists/{list_id}/', data=data)
+
+    def add_slices_to_list(self, list_id, scorehashes):
+        data = {'slicehashes': ','.join(scorehashes)}
+        return self.make_request(METHOD_POST, f'/lists/{list_id}/slices/', data=data)
+
+    def remove_slice_from_list(self, list_id, scorehash):
+        return self.make_request(METHOD_DELETE, f'/lists/{list_id}/slices/{scorehash}/')

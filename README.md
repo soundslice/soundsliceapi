@@ -331,3 +331,71 @@ On success, returns a dictionary with the following key:
 | Key     | Example | Notes   |
 | ------- | ------  | ------- |
 | `"id"`    | `626940`  | The recording ID, as an integer. |
+
+### create_list(name, parent_id=None)
+
+Creates a list within your account.
+
+```python
+client.create_list(
+    # Required.
+    name="My list",
+
+    # Optional. The ID of the list's parent. Use this if you want to nest
+    # a list within another one.
+    parent_id="2pyy7"
+)
+```
+
+On success, returns a dictionary with the following key:
+
+| Key       | Example   | Notes                             |
+| --------- | --------- | --------------------------------- |
+| `"id"`    | `"2cyy7"` | The ID of the newly created list. |
+
+### rename_list(list_id, name)
+
+Renames the given list within your account.
+
+```python
+client.rename_list(
+    # All required.
+    list_id="2pyy7",
+
+    name="My renamed list"
+```
+
+On success, returns a dictionary with the following key:
+
+| Key     | Example   | Notes               |
+| ------- | --------- | ------------------- |
+| `"id"`  | `"2pyy7"` | The ID of the list. |
+
+### add_slices_to_list(list_id, scorehashes)
+
+Adds the slices with the given scorehashes to the given list.
+
+```python
+client.add_slices_to_list(
+    # All required.
+    list_id="n4nrf",
+
+    # An array of scorehashes to add to the list.
+    scorehashes=["d8sDc"]
+)
+```
+
+Note that a slice is allowed to be in multiple lists.
+
+### remove_slice_from_list(list_id, scorehash)
+
+Removes the given slice from the given list.
+
+```python
+client.remove_slice_from_list(
+    # All required.
+    list_id="n4nrf",
+
+    scorehash="d8sDc"
+)
+```
