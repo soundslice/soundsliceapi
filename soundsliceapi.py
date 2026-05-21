@@ -1,6 +1,6 @@
 """The official Python library for Soundslice's data API."""
 
-__version__ = '1.1'
+__version__ = '1.2'
 
 import json
 import requests
